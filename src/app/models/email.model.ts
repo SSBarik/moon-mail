@@ -15,3 +15,8 @@ export interface EmailListResponse {
 	list: Email[];
 	total: number;
 }
+
+export interface EmailBody {
+  id: string;
+  body: string;
+}

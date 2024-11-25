@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { EmailListResponse } from '../models/email.model';
+import { EmailBody, EmailListResponse } from '../models/email.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,5 +13,9 @@ export class EmailService {
 
   getEmailList(): Observable<EmailListResponse> {
     return this.http.get<EmailListResponse>(this.apiUrl);
+  }
+
+  getEmailDeatils(id: string): Observable<EmailBody> {
+    return this.http.get<EmailBody>(`${this.apiUrl}?id=${id}`);
   }
 }

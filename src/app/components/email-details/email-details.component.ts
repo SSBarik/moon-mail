@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EmailService } from '../../services/email.service';
+import { EmailBody } from '../../models/email.model';
 
 @Component({
   selector: 'app-email-details',
@@ -9,9 +11,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './email-details.component.scss'
 })
 export class EmailDetailsComponent {
-  email: any;
+  emailDeatails: EmailBody | null = null;
+  isLoading = false;
+  errorMessage: string = '';
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private emailService: EmailService) {}
   
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -27,13 +31,17 @@ export class EmailDetailsComponent {
   }
 
   loadEmailDetail(id: string) {
-    // TODO: fetch email details
-    this.email = {
-      id: id,
-      from: 'John Doe',
-      subject: 'Meeting Reminder',
-      body: 'Please remember our meeting tomorrow at 10 AM.',
-      date: '2024-11-25T09:00:00'
-    };
+    this.isLoading = true;
+    this.emailService.getEmailDeatils(id).subscribe(
+      (response) => {
+        this.isLoading = false;
+        this.emailDeatails = response;
+      },
+      (error) => {
+        this.isLoading = false;
+        // TODO: Alerts
+        this.errorMessage = 'Failed to load email details';
+      }
+    );
   }
 }
