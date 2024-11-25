@@ -3,4 +3,7 @@
 <div *ngIf="emailDetails">
   <h3>{{ emailDetails.id }}</h3>
   <div [innerHTML]="emailDetails.body"></div>
+  <button mat-raised-button color="accent" (click)="toggleFavourite(emailDetails.id)">
+    {{ this.isFavourite ? 'Unmark favourite' : 'Mark as favourite' }}
+  </button>
 </div>

@@ -4,6 +4,8 @@ export interface Email {
 	date: number;
 	subject: string;
 	short_description: string;
+	isRead?: boolean;
+  isFavourite?: boolean;
 }
   
 export interface EmailSender {

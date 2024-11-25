@@ -5,6 +5,7 @@ import { EmailService } from '../../services/email.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { catchError, finalize, of } from 'rxjs';
+import { EmailStateService } from '../../services/email-state.service';
 
 @Component({
   selector: 'app-inbox',
@@ -20,13 +21,19 @@ export class InboxComponent {
   isLoading = false;
   errorMessage: string = '';
 
-  constructor(private emailService: EmailService) {}
+  constructor(private emailService: EmailService, private emailStateService: EmailStateService) {}
 
   ngOnInit(): void {
     this.fetchEmails();
+    
+    // Subscribe to changes in the email list
+    this.emailStateService.emailList$.subscribe((updatedList) => {
+      this.emailList = updatedList;
+    });
   }
 
   fetchEmails(): void {
+    console.log("fetching email list...")
     this.isLoading = true;
   
     this.emailService.getEmailList()
@@ -39,7 +46,12 @@ export class InboxComponent {
       )
       .subscribe((response: EmailListResponse) => {
         this.emailListResponse = response;
-        this.emailList = response.list;
+        this.emailList = response.list.map((email) => ({
+          ...email,
+          isRead: false,
+          isFavourite: false,
+        }));
+        this.emailStateService.updateEmailList(this.emailList);
       });
   }
 }
