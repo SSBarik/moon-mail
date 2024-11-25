@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Email, EmailListResponse } from '../../models/email.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { EmailStateService } from '../../services/email-state.service';
 
 @Component({
   selector: 'app-email-list',
@@ -11,9 +12,19 @@ import { Router } from '@angular/router';
   styleUrl: './email-list.component.scss'
 })
 export class EmailListComponent {
-  @Input() emails: Email[] = [];
+  emails: Email[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,  private emailStateService: EmailStateService ) {}
+  
+  ngOnInit(): void {
+    this.loadEmails();
+  }
+
+  loadEmails(): void {
+    this.emailStateService.getEmailList().subscribe((emailList) => {
+      this.emails = emailList;
+    });
+  }
 
   handleEmailClick(id: string) {
     console.log("email id: ", id);

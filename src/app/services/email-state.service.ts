@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Email } from '../models/email.model';
 
 @Injectable({
@@ -11,6 +11,10 @@ export class EmailStateService {
 
   setEmailList(emails: Email[]): void {
     this.emailListSubject.next(emails);
+  }
+
+  getEmailList(): Observable<Email[]> {
+    return this.emailList$;
   }
 
   get emailListValue(): Email[] {
