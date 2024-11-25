@@ -1,0 +1,16 @@
+<h1>INBOX</h1>
+
+<div *ngIf="isLoading">Emails Loading...</div>
+
+<!-- TODO: Alerts -->
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div *ngIf="!isLoading && emailList.length === 0">
+  No emails available.
+</div>
+
+<div *ngIf="!isLoading && emailList.length > 0">
+  <app-email-list [emails]="emailList"></app-email-list>
+</div>
+
+
