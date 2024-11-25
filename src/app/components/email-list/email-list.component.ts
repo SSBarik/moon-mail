@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Email, EmailListResponse } from '../../models/email.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-list',
@@ -11,4 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class EmailListComponent {
   @Input() emails: Email[] = [];
+
+  constructor(private router: Router) {}
+
+  handleEmailClick(id: string) {
+    console.log("email id: ", id);
+    this.router.navigate([`/inbox/id/${id}`]);
+  }
 }

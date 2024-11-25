@@ -3,11 +3,12 @@ import { EmailListComponent } from "../../components/email-list/email-list.compo
 import { Email, EmailListResponse } from '../../models/email.model';
 import { EmailService } from '../../services/email.service';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, EmailListComponent],
+  imports: [CommonModule, EmailListComponent, RouterOutlet],
   providers: [EmailService],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'

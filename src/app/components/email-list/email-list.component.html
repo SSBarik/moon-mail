@@ -5,6 +5,7 @@
       <h3>Subject: {{ email.subject }}</h3>
       <p>{{ email.short_description }}</p>
       <p>Date: {{ email.date }}</p>
+      <button (click)="handleEmailClick(email.id)">View Email</button>
     </li>
   </ul>
 </div>
