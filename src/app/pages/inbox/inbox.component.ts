@@ -4,6 +4,7 @@ import { Email, EmailListResponse } from '../../models/email.model';
 import { EmailService } from '../../services/email.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { catchError, finalize, of } from 'rxjs';
 
 @Component({
   selector: 'app-inbox',
@@ -27,16 +28,18 @@ export class InboxComponent {
 
   fetchEmails(): void {
     this.isLoading = true;
-    this.emailService.getEmailList().subscribe(
-      (response) => {
-        this.isLoading = false;
+  
+    this.emailService.getEmailList()
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        catchError((error) => {
+          this.errorMessage = 'Failed to load emails';
+          return of({ list: [], total: 0 } as EmailListResponse);
+        })
+      )
+      .subscribe((response: EmailListResponse) => {
         this.emailListResponse = response;
-        this.emailList = this.emailListResponse.list;
-      },
-      (error) => {
-        this.isLoading = false;
-        this.errorMessage = 'Failed to load emails';
-      }
-    );
+        this.emailList = response.list;
+      });
   }
 }

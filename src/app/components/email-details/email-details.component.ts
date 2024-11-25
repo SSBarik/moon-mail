@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../../services/email.service';
 import { EmailBody } from '../../models/email.model';
+import { catchError, EMPTY, finalize } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-email-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './email-details.component.html',
   styleUrl: './email-details.component.scss'
 })
 export class EmailDetailsComponent {
-  emailDeatails: EmailBody | null = null;
+  emailDetails: EmailBody | null = null;
   isLoading = false;
   errorMessage: string = '';
 
@@ -32,16 +34,17 @@ export class EmailDetailsComponent {
 
   loadEmailDetail(id: string) {
     this.isLoading = true;
-    this.emailService.getEmailDeatils(id).subscribe(
-      (response) => {
-        this.isLoading = false;
-        this.emailDeatails = response;
-      },
-      (error) => {
-        this.isLoading = false;
-        // TODO: Alerts
-        this.errorMessage = 'Failed to load email details';
-      }
-    );
+    this.emailService
+      .getEmailDeatils(id)
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        catchError((error) => {
+          this.errorMessage = 'Failed to load email details';
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        this.emailDetails = response;
+      });
   }
 }

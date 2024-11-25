@@ -1,3 +1,6 @@
-<p>email-details for email id: {{ emailDeatails?.id }}</p>
-
-{{ emailDeatails?.body }}
+<div *ngIf="isLoading">Email Details Loading...</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+<div *ngIf="emailDetails">
+  <h3>{{ emailDetails.id }}</h3>
+  <div [innerHTML]="emailDetails.body"></div>
+</div>
