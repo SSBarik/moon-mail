@@ -1,21 +1,40 @@
 <h1>INBOX</h1>
 
 <!-- TODO: Master-slave layout implementation -->
-<div>
-  <router-outlet></router-outlet>
-</div>
+<mat-grid-list cols="4" rowHeight="40vh">
+  <!-- Master Tile -->
+  <mat-grid-tile 
+    *ngIf="masterTile" 
+    [colspan]="masterTile.cols" 
+    [rowspan]="masterTile.rows" 
+    [style.background]="masterTile.color">
+    <div class="master-content">
+      <div *ngIf="isLoading">Emails Loading...</div>
 
-<div *ngIf="isLoading">Emails Loading...</div>
+      <!-- TODO: Alerts -->
+      <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  
+      <div *ngIf="!isLoading && emailList.length === 0">
+        No emails available.
+      </div>
+  
+      <div *ngIf="!isLoading && emailList.length > 0" class="email-list-container">
+        <app-email-list></app-email-list>
+      </div>
+    </div>
+  </mat-grid-tile>
 
-<!-- TODO: Alerts -->
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
+  <!-- Slave Tile -->
+  <mat-grid-tile 
+    *ngIf="slaveTile" 
+    [colspan]="slaveTile.cols" 
+    [rowspan]="slaveTile.rows" 
+    [style.background]="slaveTile.color">
+    <router-outlet></router-outlet>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<div *ngIf="!isLoading && emailList.length === 0">
-  No emails available.
-</div>
+<button (click)="toggleLayout()">Toggle Layout</button>
 
-<div *ngIf="!isLoading && emailList.length > 0">
-  <app-email-list></app-email-list>
-</div>
 
 

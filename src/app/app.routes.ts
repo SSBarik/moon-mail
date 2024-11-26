@@ -8,7 +8,6 @@ export const routes: Routes = [
 		path: 'inbox',
 		component: InboxComponent,
 		children: [
-			{ path: '', component: EmailListComponent },
 			{ path: 'id/:id', component: EmailDetailsComponent }
 		]
 	},

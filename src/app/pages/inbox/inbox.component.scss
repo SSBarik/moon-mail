@@ -1,0 +1,18 @@
+.master-content {
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: scroll;
+}
+
+.email-list-container {
+  flex: 1; 
+  overflow-y: auto;
+  padding: 10px;
+}
+
+app-email-list {
+  width: 100%;
+}

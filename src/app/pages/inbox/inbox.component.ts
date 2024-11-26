@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { catchError, finalize, of } from 'rxjs';
 import { EmailStateService } from '../../services/email-state.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, EmailListComponent, RouterOutlet],
+  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule],
   providers: [EmailService],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
@@ -18,8 +20,19 @@ import { EmailStateService } from '../../services/email-state.service';
 export class InboxComponent {
   emailListResponse: EmailListResponse | null = null;
   emailList: Email[] = [];
-  isLoading = false;
+  isLoading: boolean = false;
   errorMessage: string = '';
+  isUnread: boolean = false;
+  isRead: boolean = false;
+  isFavourite: boolean = false;
+  masterTile = {
+    text: 'Master',
+    cols: 4,
+    rows: 2,
+    color: 'lightgreen',
+  };
+
+  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: 'lightblue' };
 
   constructor(private emailService: EmailService, private emailStateService: EmailStateService) {}
 
@@ -53,5 +66,10 @@ export class InboxComponent {
         }));
         this.emailStateService.updateEmailList(this.emailList);
       });
+  }
+
+  toggleLayout() {
+    this.masterTile.cols = 1;
+    this.slaveTile.cols = 3;
   }
 }
