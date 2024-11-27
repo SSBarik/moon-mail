@@ -21,6 +21,7 @@ import { EmailCardComponent } from '../../components/email-card/email-card.compo
 export class InboxComponent {
   emailListResponse: EmailListResponse | null = null;
   emailList: Email[] = [];
+  filteredEmails: Email[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
   isUnread: boolean = false;
@@ -43,6 +44,7 @@ export class InboxComponent {
     // Subscribe to changes in the email list
     this.emailStateService.emailList$.subscribe((updatedList) => {
       this.emailList = updatedList;
+      this.filteredEmails = [...this.emailList];
     });
   }
 
@@ -66,11 +68,29 @@ export class InboxComponent {
           isFavourite: false,
         }));
         this.emailStateService.updateEmailList(this.emailList);
+        this.filteredEmails = [...this.emailList];
       });
   }
 
   toggleLayout() {
     this.masterTile.cols = 1;
     this.slaveTile.cols = 3;
+  }
+
+  applyFilter(filter: string) {
+    switch (filter) {
+      case 'read':
+        this.filteredEmails = this.emailList.filter(email => email.isRead);
+        break;
+      case 'unread':
+        this.filteredEmails = this.emailList.filter(email => !email.isRead);
+        break;
+      case 'favorite':
+        this.filteredEmails = this.emailList.filter(email => email.isFavourite);
+        break;
+      default:
+        this.filteredEmails = [...this.emailList];
+        break;
+    }
   }
 }

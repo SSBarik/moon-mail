@@ -13,12 +13,12 @@ import { EmailCardComponent } from "../email-card/email-card.component";
   styleUrl: './email-list.component.scss'
 })
 export class EmailListComponent {
-  emails: Email[] = [];
+  @Input() emails: Email[] = [];
 
   constructor(private router: Router,  private emailStateService: EmailStateService ) {}
   
   ngOnInit(): void {
-    this.loadEmails();
+    // this.loadEmails();
   }
 
   loadEmails(): void {
