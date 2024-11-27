@@ -1,11 +1,7 @@
 <div *ngIf="emails">
   <ul>
     <li *ngFor="let email of emails">
-      <h2>From: {{ email.from.name }} <{{ email.from.email }}></h2>
-      <h3>Subject: {{ email.subject }}</h3>
-      <p>{{ email.short_description }}</p>
-      <p>Date: {{ email.date }}</p>
-      <button (click)="handleEmailClick(email.id)">View Email</button>
-    </li>
+      <app-email-card [email]="email" (click)="handleEmailClick(email.id)"></app-email-card>
+    </li> 
   </ul>
 </div>

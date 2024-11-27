@@ -6,11 +6,12 @@ import { catchError, EMPTY, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { EmailStateService } from '../../services/email-state.service';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-email-details',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule],
   templateUrl: './email-details.component.html',
   styleUrl: './email-details.component.scss'
 })

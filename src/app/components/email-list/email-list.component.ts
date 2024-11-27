@@ -3,11 +3,12 @@ import { Email, EmailListResponse } from '../../models/email.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EmailStateService } from '../../services/email-state.service';
+import { EmailCardComponent } from "../email-card/email-card.component";
 
 @Component({
   selector: 'app-email-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EmailCardComponent],
   templateUrl: './email-list.component.html',
   styleUrl: './email-list.component.scss'
 })

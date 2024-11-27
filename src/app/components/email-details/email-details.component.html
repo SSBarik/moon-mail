@@ -1,9 +1,29 @@
 <div *ngIf="isLoading">Email Details Loading...</div>
 <div *ngIf="errorMessage">{{ errorMessage }}</div>
 <div *ngIf="emailDetails">
+  <div class="email-list">
+    <mat-card class="email-card">
+      <mat-card-header>
+        <div mat-card-avatar class="email-avatar">S</div>
+        <mat-card-title>
+          From:
+        </mat-card-title>
+        <mat-card-subtitle>Subject:</mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <div [innerHTML]="emailDetails.body"></div>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <!-- <span class="email-date">{{ email.date | date: 'dd/MM/yyyy hh:mma' }}</span> -->
+        <button mat-raised-button color="accent" (click)="toggleFavourite(emailDetails.id)">
+          {{ this.isFavourite ? 'Unmark favourite' : 'Mark as favourite' }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
   <h3>{{ emailDetails.id }}</h3>
-  <div [innerHTML]="emailDetails.body"></div>
-  <button mat-raised-button color="accent" (click)="toggleFavourite(emailDetails.id)">
-    {{ this.isFavourite ? 'Unmark favourite' : 'Mark as favourite' }}
-  </button>
+  
 </div>

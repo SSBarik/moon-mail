@@ -8,11 +8,12 @@ import { catchError, finalize, of } from 'rxjs';
 import { EmailStateService } from '../../services/email-state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { EmailCardComponent } from '../../components/email-card/email-card.component';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule],
+  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule, EmailCardComponent],
   providers: [EmailService],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
@@ -29,7 +30,7 @@ export class InboxComponent {
     text: 'Master',
     cols: 4,
     rows: 2,
-    color: 'lightgreen',
+    color: '#f4f5f9',
   };
 
   slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: 'lightblue' };
