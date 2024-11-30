@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+$primary-color: mat.define-palette(mat.$pink-palette, 500, 700); // Use #E54065 for Accent color
+$background-color: #F4F5F9; // Background color
+$border-color: #CFD2DC; // Border color
+$text-color: #636363; // Text color
+$filter-button-color: #E1E4EA; // Filter button color
+$read-background-color: #F2F2F2; // Read background color
+
+// Custom theme definition
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$pink-palette, 500),
+    accent: mat.define-palette(mat.$pink-palette, 500),
+    warn: mat.define-palette(mat.$red-palette),
+    background: (
+      default: $background-color
+    )
+  ),
+  typography: mat.define-typography-config(),
+));
+
+@include mat.all-component-themes($custom-theme);
