@@ -20,7 +20,7 @@ export class EmailStateService {
     color: '#f4f5f9',
   };
 
-  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: 'lightblue' };
+  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: '#F4F5F9' };
 
 
   setEmailList(emails: any[]): void {

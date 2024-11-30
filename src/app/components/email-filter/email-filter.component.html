@@ -1,23 +1,16 @@
 <div class="filter-buttons">
-  Filters:
-  <button mat-flat-button 
-          (click)="applyFilter('all')" 
-          [ngStyle]="{ 'background-color': currentFilter === 'all' ? '#e1e4ea' : '' }">
-    All
-  </button>
-  <button mat-flat-button 
-          (click)="applyFilter('read')" 
-          [ngStyle]="{ 'background-color': currentFilter === 'read' ? '#e1e4ea' : '' }">
-    Read
-  </button>
-  <button mat-flat-button 
-          (click)="applyFilter('unread')" 
-          [ngStyle]="{ 'background-color': currentFilter === 'unread' ? '#e1e4ea' : '' }">
-    Unread
-  </button>
-  <button mat-flat-button 
-          (click)="applyFilter('favorite')" 
-          [ngStyle]="{ 'background-color': currentFilter === 'favorite' ? '#e1e4ea' : '' }">
-    Favorites
-  </button>
+  <span class="filter-label">Filters:</span>
+  <mat-chip-listbox
+    [(ngModel)]="currentFilter"
+    (ngModelChange)="applyFilter($event)"
+    disableRipple
+    disableOptionCentering
+    hideSingleSelectionIndicator>
+    <mat-chip-option
+      *ngFor="let filter of filters"
+      [value]="filter.value"
+      class="custom-chip">
+      {{ filter.label }}
+    </mat-chip-option>
+  </mat-chip-listbox>
 </div>
