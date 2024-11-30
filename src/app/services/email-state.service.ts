@@ -15,7 +15,7 @@ export class EmailStateService {
 
   masterTile = {
     text: 'Master',
-    cols: 4,
+    cols: 12,
     rows: 2,
     color: '#f4f5f9',
   };

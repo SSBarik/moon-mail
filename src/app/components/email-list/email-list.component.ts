@@ -33,8 +33,8 @@ export class EmailListComponent {
     this.selectedEmailId = id; 
 
     // TODO: improve perf
-    this.emailStateService.masterTile.cols = 1;
-    this.emailStateService.slaveTile.cols = 3;
+    this.emailStateService.masterTile.cols = 4;
+    this.emailStateService.slaveTile.cols = 8;
   
     this.emailStateService.markReadById(id);
     this.router.navigate([`/inbox/id/${id}`]);
