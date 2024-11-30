@@ -1,5 +1,8 @@
 <div class="email-list">
-  <mat-card class="email-card">
+  <mat-card class="email-card" [ngClass]="{
+      'read-email': email.isRead, 
+      'selected-email': isActive
+    }">
     <mat-card-header>
       <div mat-card-avatar class="email-avatar">{{ getInitial(email.from.name) }}</div>
       <mat-card-title>

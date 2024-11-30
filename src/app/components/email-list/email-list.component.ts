@@ -14,6 +14,7 @@ import { EmailCardComponent } from "../email-card/email-card.component";
 })
 export class EmailListComponent {
   emails: Email[] = [];
+  selectedEmailId: string | null = null;
 
   constructor(private router: Router,  private emailStateService: EmailStateService ) {}
   
@@ -29,6 +30,8 @@ export class EmailListComponent {
 
   handleEmailClick(id: string) {
     console.log("email id: ", id);
+    this.selectedEmailId = id; 
+
     // TODO: improve perf
     this.emailStateService.masterTile.cols = 1;
     this.emailStateService.slaveTile.cols = 3;

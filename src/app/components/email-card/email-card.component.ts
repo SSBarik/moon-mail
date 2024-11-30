@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 })
 export class EmailCardComponent {
   @Input() email!: Email;
+  @Input() isActive: boolean = false;
 
   getInitial(name: string): string {
     return name ? name.charAt(0).toUpperCase() : '';
