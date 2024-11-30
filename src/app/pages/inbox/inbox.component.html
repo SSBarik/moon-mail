@@ -1,6 +1,9 @@
 <h1>INBOX</h1>
 
-<!-- TODO: Master-slave layout implementation -->
+<div class="email-filter">
+     <app-email-filter></app-email-filter>
+</div>
+
 <mat-grid-list cols="12" rowHeight="40vh">
   <!-- Master Tile -->
   <mat-grid-tile 
@@ -19,9 +22,6 @@
       </div>
   
       <div *ngIf="!isLoading" class="email-list-container">
-        <!-- Filters -->
-        <app-email-filter></app-email-filter>
-
         <app-email-list></app-email-list>
         <!-- <app-email-list [emails]="filteredEmails"></app-email-list> -->
       </div>
@@ -35,7 +35,7 @@
     [rowspan]="slaveTile.rows" 
     [style.background]="slaveTile.color">
     <!-- TODO: style fix -->
-    <div class="master-content" style="margin-top: 95px;">
+    <div class="master-content">
        <router-outlet></router-outlet>
     </div>
   </mat-grid-tile>
