@@ -16,9 +16,9 @@
     </mat-card-content>
 
     <mat-card-actions> 
-      <div>
+      <div class="email-actions">
         <span class="email-date">  {{ email.date | date: 'dd/MM/yyyy hh:mma' | lowercase }} </span>
-        <mat-basic-chip *ngIf="email.isFavorite" color="primary">Favorite</mat-basic-chip>
+        <mat-basic-chip *ngIf="email.isFavorite" color="accent" class="favorite-chip">Favorite</mat-basic-chip>
       </div>
     </mat-card-actions>
   </mat-card>

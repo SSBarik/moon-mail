@@ -46,12 +46,17 @@ mat-card-content {
 }
 
 .email-card {
-  position: relative; /* Needed for absolute positioning of buttons */
+  position: relative;
 }
 
 .mark-read-btn {
   position: absolute;
-  top: 15px; /* Adjust as needed */
-  right: 54px; /* Adjust as needed */
-  z-index: 10; /* Make sure it's on top of other content */
+  top: 15px; 
+  right: 54px; 
+  z-index: 10; 
+  border-radius: 50px;
+  font-size: 10px; 
+  padding: 8px 12px; 
+  min-width: 0;
+  height: auto;
 }

@@ -34,7 +34,8 @@
     [colspan]="slaveTile.cols" 
     [rowspan]="slaveTile.rows" 
     [style.background]="slaveTile.color">
-    <div class="master-content">
+    <!-- TODO: style fix -->
+    <div class="master-content" style="margin-top: 95px;">
        <router-outlet></router-outlet>
     </div>
   </mat-grid-tile>
