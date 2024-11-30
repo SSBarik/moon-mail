@@ -5,7 +5,7 @@ export interface Email {
 	subject: string;
 	short_description: string;
 	isRead?: boolean;
-  isFavourite?: boolean;
+  isFavorite?: boolean;
 }
   
 export interface EmailSender {

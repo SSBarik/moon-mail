@@ -13,22 +13,24 @@ import { EmailCardComponent } from "../email-card/email-card.component";
   styleUrl: './email-list.component.scss'
 })
 export class EmailListComponent {
-  @Input() emails: Email[] = [];
+  emails: Email[] = [];
 
   constructor(private router: Router,  private emailStateService: EmailStateService ) {}
   
   ngOnInit(): void {
-    // this.loadEmails();
+    this.loadEmails();
   }
 
   loadEmails(): void {
-    this.emailStateService.getEmailList().subscribe((emailList) => {
-      this.emails = emailList;
-    });
+    this.emailStateService.filteredEmailList$.subscribe(
+      emails => (this.emails = emails)
+    );
   }
 
   handleEmailClick(id: string) {
     console.log("email id: ", id);
+    // TODO: improve perf
+    this.emailStateService.markReadById(id);
     this.router.navigate([`/inbox/id/${id}`]);
   }
 }

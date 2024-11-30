@@ -1,6 +1,6 @@
 <div *ngIf="emails">
   <ul>
-    <li *ngFor="let email of emails">
+    <li *ngFor="let email of emails ">
       <app-email-card [email]="email" (click)="handleEmailClick(email.id)"></app-email-card>
     </li> 
   </ul>

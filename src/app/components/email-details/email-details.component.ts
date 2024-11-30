@@ -19,7 +19,7 @@ export class EmailDetailsComponent {
   emailDetails: EmailBody | null = null;
   isLoading = false;
   errorMessage: string = '';
-  isFavourite: boolean = false;
+  isFavorite: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,22 +53,22 @@ export class EmailDetailsComponent {
       )
       .subscribe((response) => {
         this.emailDetails = response;
-        this.setIsFavourite(this.emailDetails.id);
+        this.setIsFavorite(this.emailDetails.id);
         this.emailStateService.markReadById(id);
       });
   }
 
-  setIsFavourite(id: string): void {
-    this.isFavourite = this.getIsFavourite(id);
+  setIsFavorite(id: string): void {
+    this.isFavorite = this.getIsFavorite(id);
   }
 
-  getIsFavourite(id: string): boolean {
+  getIsFavorite(id: string): boolean {
     const email = this.emailStateService.emailListValue.find(email => email.id === id);
-    return email ? email.isFavourite?? false : false;
+    return email ? email.isFavorite?? false : false;
   }
 
   toggleFavourite(id: string): void {
-    this.emailStateService.toggleFavouriteById(id);
-    this.isFavourite = !this.isFavourite;
+    this.isFavorite ? this.emailStateService.unmarkFavoriteById(id) : this.emailStateService.markFavoriteById(id);
+    this.isFavorite = !this.isFavorite;
   }
 }

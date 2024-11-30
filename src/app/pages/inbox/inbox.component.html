@@ -27,8 +27,9 @@
         No emails available.
       </div>
   
-      <div *ngIf="!isLoading && filteredEmails.length > 0" class="email-list-container">
-        <app-email-list [emails]="filteredEmails"></app-email-list>
+      <div *ngIf="!isLoading" class="email-list-container">
+        <app-email-list></app-email-list>
+        <!-- <app-email-list [emails]="filteredEmails"></app-email-list> -->
       </div>
     </div>
   </mat-grid-tile>
