@@ -10,7 +10,11 @@
     [rowspan]="masterTile.rows" 
     [style.background]="masterTile.color">
     <div class="master-content">
-      <div *ngIf="isLoading">Emails Loading...</div>
+      <div *ngIf="isLoading">
+        <!-- TODO: reuse -->
+        <ngx-skeleton-loader count="5" appearance="line" animation="pulse"></ngx-skeleton-loader>
+        <ngx-skeleton-loader count="5" appearance="circle" animation="pulse"></ngx-skeleton-loader>
+      </div>
 
       <!-- TODO: Alerts -->
       <div *ngIf="errorMessage">{{ errorMessage }}</div>

@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { EmailStateService } from '../../services/email-state.service';
 import { MatCardModule } from '@angular/material/card';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-email-details',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, NgxSkeletonLoaderModule],
   templateUrl: './email-details.component.html',
   styleUrl: './email-details.component.scss'
 })

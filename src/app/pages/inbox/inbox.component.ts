@@ -10,11 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EmailCardComponent } from '../../components/email-card/email-card.component';
 import { EmailFilterComponent } from '../../components/email-filter/email-filter.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule, EmailCardComponent, EmailFilterComponent],
+  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule, EmailCardComponent, EmailFilterComponent, NgxSkeletonLoaderModule],
   providers: [EmailService],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
