@@ -9,11 +9,12 @@ import { EmailStateService } from '../../services/email-state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EmailCardComponent } from '../../components/email-card/email-card.component';
+import { EmailFilterComponent } from '../../components/email-filter/email-filter.component';
 
 @Component({
   selector: 'app-inbox',
   standalone: true,
-  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule, EmailCardComponent],
+  imports: [CommonModule, EmailListComponent, RouterOutlet, MatButtonModule, MatGridListModule, EmailCardComponent, EmailFilterComponent],
   providers: [EmailService],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
@@ -61,9 +62,5 @@ export class InboxComponent {
         }));
         this.emailStateService.setEmailList(this.emailList);
       });
-  }
-
-  applyFilter(filter: string): void {
-    this.emailStateService.applyFilter(filter);
   }
 }
