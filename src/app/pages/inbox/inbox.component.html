@@ -40,7 +40,9 @@
     [colspan]="slaveTile.cols" 
     [rowspan]="slaveTile.rows" 
     [style.background]="slaveTile.color">
-    <router-outlet></router-outlet>
+    <div class="master-content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
 

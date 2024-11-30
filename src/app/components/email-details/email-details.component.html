@@ -4,11 +4,14 @@
   <div class="email-list">
     <mat-card class="email-card">
       <mat-card-header>
-        <div mat-card-avatar class="email-avatar">S</div>
+        <!-- TODO: Fix -->
+        <div mat-card-avatar class="email-avatar">{{ getInitial(this.email?.from?.name ?? '') }}</div> 
         <mat-card-title>
-          From:
+          {{ this.email?.subject }}
         </mat-card-title>
-        <mat-card-subtitle>Subject:</mat-card-subtitle>
+        <mat-card-subtitle>
+          <span class="email-date">  {{ this.email?.date | date: 'dd/MM/yyyy hh:mma' | lowercase }} </span>
+        </mat-card-subtitle>
       </mat-card-header>
   
       <mat-card-content>
@@ -17,7 +20,7 @@
   
       <mat-card-actions>
         <!-- <span class="email-date">{{ email.date | date: 'dd/MM/yyyy hh:mma' }}</span> -->
-        <button mat-raised-button color="accent" (click)="toggleFavourite(emailDetails.id)">
+        <button class="mark-read-btn" mat-flat-button color="accent" (click)="toggleFavourite(emailDetails.id)">
           {{ this.isFavorite ? 'Unmark favourite' : 'Mark as favourite' }}
         </button>
       </mat-card-actions>

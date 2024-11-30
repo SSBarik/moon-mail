@@ -6,12 +6,12 @@
 }
 
 .email-card {
-  border: 1px solid #ddd;
+  border: 2px solid #CFD2DC;
   border-radius: 8px;
 }
 
 .email-avatar {
-  background-color: #f44336;
+  background-color: #E54065;
   color: white;
   font-size: 18px;
   display: flex;
@@ -26,4 +26,32 @@
   font-size: 0.9rem;
   color: #666;
   margin-right: auto;
+}
+
+mat-card {
+  box-shadow: none !important;
+}
+
+mat-card-title {
+  // font-size: 0.9rem;
+}
+
+mat-card-subtitle {
+  margin-top: 10px;
+}
+
+mat-card-content {
+  margin-left: 54px;
+  margin-right: 54px;
+}
+
+.email-card {
+  position: relative; /* Needed for absolute positioning of buttons */
+}
+
+.mark-read-btn {
+  position: absolute;
+  top: 15px; /* Adjust as needed */
+  right: 54px; /* Adjust as needed */
+  z-index: 10; /* Make sure it's on top of other content */
 }

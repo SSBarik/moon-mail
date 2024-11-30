@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../../services/email.service';
-import { EmailBody } from '../../models/email.model';
+import { Email, EmailBody } from '../../models/email.model';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,7 @@ export class EmailDetailsComponent {
   isLoading = false;
   errorMessage: string = '';
   isFavorite: boolean = false;
+  email: Email | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,6 +35,7 @@ export class EmailDetailsComponent {
 
       if (emailId) {
         this.loadEmailDetail(emailId);
+        this.email = this.emailStateService.getEmailById(emailId); // TODO:
       } else {
         console.log('Email ID is null');
       }
@@ -70,5 +72,9 @@ export class EmailDetailsComponent {
   toggleFavourite(id: string): void {
     this.isFavorite ? this.emailStateService.unmarkFavoriteById(id) : this.emailStateService.markFavoriteById(id);
     this.isFavorite = !this.isFavorite;
+  }
+
+  getInitial(name: string): string {
+    return name ? name.charAt(0).toUpperCase() : '';
   }
 }

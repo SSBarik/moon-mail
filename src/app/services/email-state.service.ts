@@ -76,4 +76,8 @@ export class EmailStateService {
   get emailListValue(): Email[] {
     return this.emailListSubject.getValue(); 
   }
+
+  getEmailById(id: string): Email {
+    return this.emailListSubject.getValue().find(email => email.id === id)!;  // TODO: fix Non-null assertion
+  }
 }
