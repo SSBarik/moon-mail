@@ -1,17 +1,17 @@
 .email-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
+  gap: 15px;
+  padding: 15px;
 }
 
 .email-card {
-  border: 1px solid #ddd;
+  border: 2px solid #CFD2DC;
   border-radius: 8px;
 }
 
 .email-avatar {
-  background-color: #f44336;
+  background-color: #E54065;
   color: white;
   font-size: 18px;
   display: flex;
@@ -22,8 +22,30 @@
   border-radius: 50%;
 }
 
+
 .email-date {
   font-size: 0.9rem;
   color: #666;
   margin-right: auto;
 }
+
+mat-card {
+  box-shadow: none !important;
+}
+
+mat-card-title {
+  font-size: 0.9rem;
+}
+
+mat-card-subtitle {
+  margin-top: 10px;
+}
+
+mat-card-content {
+  margin-left: 54px;
+}
+
+mat-card-actions {
+  margin-left: 64px;
+}
+
