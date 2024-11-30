@@ -13,6 +13,16 @@ export class EmailStateService {
   emailList$ = this.emailListSubject.asObservable();
   filteredEmailList$ = this.filteredEmailListSubject.asObservable();
 
+  masterTile = {
+    text: 'Master',
+    cols: 4,
+    rows: 2,
+    color: '#f4f5f9',
+  };
+
+  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: 'lightblue' };
+
+
   setEmailList(emails: any[]): void {
     this.emailListSubject.next(emails);
     this.applyFilter(this.currentFilter);

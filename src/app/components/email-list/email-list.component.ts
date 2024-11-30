@@ -30,6 +30,9 @@ export class EmailListComponent {
   handleEmailClick(id: string) {
     console.log("email id: ", id);
     // TODO: improve perf
+    this.emailStateService.masterTile.cols = 1;
+    this.emailStateService.slaveTile.cols = 3;
+  
     this.emailStateService.markReadById(id);
     this.router.navigate([`/inbox/id/${id}`]);
   }

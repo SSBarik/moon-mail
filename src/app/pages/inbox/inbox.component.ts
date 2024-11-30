@@ -23,19 +23,16 @@ export class InboxComponent {
   emailList: Email[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
-  masterTile = {
-    text: 'Master',
-    cols: 4,
-    rows: 2,
-    color: '#f4f5f9',
-  };
-
-  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: 'lightblue' };
+  masterTile: any;
+  slaveTile: any;
 
   constructor(private emailService: EmailService, private emailStateService: EmailStateService) {}
 
   ngOnInit(): void {
     this.fetchEmails();
+
+    this.masterTile = this.emailStateService.masterTile;
+    this.slaveTile = this.emailStateService.slaveTile;
     
     // Subscribe to changes in the email list
     this.emailStateService.emailList$.subscribe((updatedList) => {
@@ -64,11 +61,6 @@ export class InboxComponent {
         }));
         this.emailStateService.setEmailList(this.emailList);
       });
-  }
-
-  toggleLayout() {
-    this.masterTile.cols = 1;
-    this.slaveTile.cols = 3;
   }
 
   applyFilter(filter: string): void {
