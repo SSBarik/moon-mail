@@ -31,12 +31,19 @@ export class EmailDetailsComponent {
   
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      const emailId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
+      const emailId: string | null = params.get('id');
       console.log("from route id: ", emailId);
 
       if (emailId) {
         this.loadEmailDetail(emailId);
-        this.email = this.emailStateService.getEmailById(emailId); // TODO:
+    
+        this.emailStateService.emailList$.subscribe(emails => {
+          this.emailStateService.setSelectedEmailId(emailId);
+          this.email = this.emailStateService.getEmailById(emailId);
+        });
+
+        this.emailStateService.updateMasterTileCols(4);
+        this.emailStateService.updateSlaveTileCols(8);
       } else {
         console.log('Email ID is null');
       }

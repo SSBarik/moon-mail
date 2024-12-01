@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { EmailListComponent } from "../../components/email-list/email-list.component";
 import { Email, EmailListResponse } from '../../models/email.model';
 import { EmailService } from '../../services/email.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { catchError, finalize, of } from 'rxjs';
+import { catchError, finalize, of, Subscription } from 'rxjs';
 import { EmailStateService } from '../../services/email-state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -27,19 +27,43 @@ export class InboxComponent {
   errorMessage: string = '';
   masterTile: any;
   slaveTile: any;
+  private tileSubscription: Subscription = new Subscription();
 
-  constructor(private emailService: EmailService, private emailStateService: EmailStateService) {}
+  constructor(
+    private emailService: EmailService,
+    private emailStateService: EmailStateService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.fetchEmails();
 
-    this.masterTile = this.emailStateService.masterTile;
-    this.slaveTile = this.emailStateService.slaveTile;
-    
+    this.tileSubscription.add(
+      this.emailStateService.masterTile$.subscribe(tile => {
+        this.masterTile = tile;
+      })
+    );
+
+    this.tileSubscription.add(
+      this.emailStateService.slaveTile$.subscribe(tile => {
+        this.slaveTile = tile;
+      })
+    );
+
+    // TODO: unscbscribe
     // Subscribe to changes in the email list
     this.emailStateService.emailList$.subscribe((updatedList) => {
       this.emailList = updatedList;
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe when the component is destroyed to avoid memory leaks
+    this.tileSubscription.unsubscribe();
   }
 
   fetchEmails(): void {

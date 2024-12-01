@@ -11,22 +11,49 @@ export class EmailStateService {
   private currentFilter = '';
   private favoriteEmailsKey = 'favoriteEmails';
   private readEmailsKey = 'readEmails';
-
-  emailList$ = this.emailListSubject.asObservable();
-  filteredEmailList$ = this.filteredEmailListSubject.asObservable();
-
-  masterTile = {
+  private selectedEmailIdSubject = new BehaviorSubject<string | null>(null);
+  private masterTileSubject = new BehaviorSubject<any>({
     text: 'Master',
     cols: 12,
     rows: 2,
     color: '#f4f5f9',
-  };
+  });
 
-  slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: '#F4F5F9' };
-
+  private slaveTileSubject = new BehaviorSubject<any>({
+    text: 'Slave 1',
+    cols: 0,
+    rows: 2,
+    color: '#F4F5F9',
+  });
+  
+  selectedEmailId$ = this.selectedEmailIdSubject.asObservable();
+  emailList$ = this.emailListSubject.asObservable();
+  filteredEmailList$ = this.filteredEmailListSubject.asObservable();
+  masterTile$ = this.masterTileSubject.asObservable();
+  slaveTile$ = this.slaveTileSubject.asObservable();
+  
   constructor() {
     this.loadCachedStates();
   }
+
+  updateMasterTileCols(cols: number): void {
+    const updatedTile = { ...this.masterTileSubject.value, cols };
+    this.masterTileSubject.next(updatedTile);
+  }
+
+  updateSlaveTileCols(cols: number): void {
+    const updatedTile = { ...this.slaveTileSubject.value, cols };
+    this.slaveTileSubject.next(updatedTile);
+  }
+
+  get selectedEmailId(): string | null {
+    return this.selectedEmailIdSubject.getValue();
+  }
+
+  setSelectedEmailId(id: string | null): void {
+    this.selectedEmailIdSubject.next(id);
+  }
+
 
   setEmailList(emails: Email[]): void {
     const favoriteIds = this.getCachedIds(this.favoriteEmailsKey);

@@ -1,10 +1,14 @@
-<div *ngIf="emails">
+<div *ngIf="emails && emails.length; else noEmails">
   <ul>
     <li *ngFor="let email of emails" (click)="handleEmailClick(email.id)">
       <app-email-card 
         [email]="email"
-        [isActive]="selectedEmailId === email.id">
+        [isActive]="(selectedEmailId$ | async) === email.id">
       </app-email-card>
     </li> 
   </ul>
 </div>
+
+<ng-template #noEmails>
+  <p>No emails available.</p>
+</ng-template>

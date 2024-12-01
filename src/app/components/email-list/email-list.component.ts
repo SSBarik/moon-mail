@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { Email, EmailListResponse } from '../../models/email.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EmailStateService } from '../../services/email-state.service';
 import { EmailCardComponent } from "../email-card/email-card.component";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-email-list',
@@ -14,13 +15,25 @@ import { EmailCardComponent } from "../email-card/email-card.component";
 })
 export class EmailListComponent {
   emails: Email[] = [];
-  selectedEmailId: string | null = null;
+  selectedEmailId$: Observable<string | null>;
 
-  constructor(private router: Router,  private emailStateService: EmailStateService ) {}
+  constructor(
+    private router: Router,
+    private emailStateService: EmailStateService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.selectedEmailId$ = this.emailStateService.selectedEmailId$;
+  }
   
   ngOnInit(): void {
     this.loadEmails();
   }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['selectedEmailId$'] && this.selectedEmailId$) {
+  //     this.cdr.detectChanges(); // Ensure change detection is triggered if selectedEmailId changes
+  //   }
+  // }
 
   loadEmails(): void {
     this.emailStateService.filteredEmailList$.subscribe(
@@ -30,11 +43,11 @@ export class EmailListComponent {
 
   handleEmailClick(id: string) {
     console.log("email id: ", id);
-    this.selectedEmailId = id; 
+    this.emailStateService.setSelectedEmailId(id);
 
     // TODO: improve perf
-    this.emailStateService.masterTile.cols = 4;
-    this.emailStateService.slaveTile.cols = 8;
+    this.emailStateService.updateMasterTileCols(4);
+    this.emailStateService.updateSlaveTileCols(8);
   
     this.emailStateService.markReadById(id);
     this.router.navigate([`/inbox/id/${id}`]);
