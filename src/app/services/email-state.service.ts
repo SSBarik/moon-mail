@@ -7,8 +7,10 @@ import { Email } from '../models/email.model';
 })
 export class EmailStateService {
   private emailListSubject = new BehaviorSubject<Email[]>([]);
-  private filteredEmailListSubject = new BehaviorSubject<any[]>([]);
+  private filteredEmailListSubject = new BehaviorSubject<Email[]>([]);
   private currentFilter = '';
+  private favoriteEmailsKey = 'favoriteEmails';
+  private readEmailsKey = 'readEmails';
 
   emailList$ = this.emailListSubject.asObservable();
   filteredEmailList$ = this.filteredEmailListSubject.asObservable();
@@ -22,9 +24,21 @@ export class EmailStateService {
 
   slaveTile = { text: 'Slave 1', cols: 0, rows: 2, color: '#F4F5F9' };
 
+  constructor() {
+    this.loadCachedStates();
+  }
 
-  setEmailList(emails: any[]): void {
-    this.emailListSubject.next(emails);
+  setEmailList(emails: Email[]): void {
+    const favoriteIds = this.getCachedIds(this.favoriteEmailsKey);
+    const readIds = this.getCachedIds(this.readEmailsKey);
+
+    const updatedEmails = emails.map((email) => ({
+      ...email,
+      isFavorite: favoriteIds.includes(email.id),
+      isRead: readIds.includes(email.id),
+    }));
+
+    this.emailListSubject.next(updatedEmails);
     this.applyFilter(this.currentFilter);
   }
 
@@ -36,34 +50,63 @@ export class EmailStateService {
   }
 
   markFavoriteById(emailId: string): void {
-    const updatedEmails = this.updateEmailState(emailId, { isFavorite: true });
-    this.emailListSubject.next(updatedEmails);
+    this.updateCachedIds(this.favoriteEmailsKey, emailId, true);
+    this.updateEmailState(emailId, { isFavorite: true });
     this.applyFilter(this.currentFilter);
-
-    console.log("favourite updatedList: ", updatedEmails);
+    // console.log('favorite updatedList: ', updatedEmails);
   }
-
   unmarkFavoriteById(emailId: string): void {
-    const updatedEmails = this.updateEmailState(emailId, { isFavorite: false });
-    this.emailListSubject.next(updatedEmails);
+    this.updateCachedIds(this.favoriteEmailsKey, emailId, false);
+    this.updateEmailState(emailId, { isFavorite: false });
     this.applyFilter(this.currentFilter);
-
-    console.log("favourite updatedList: ", updatedEmails);
+  
+    // console.log("favourite updatedList: ", updatedEmails);
   }
 
   markReadById(emailId: string): void {
-    const updatedEmails = this.updateEmailState(emailId, { isRead: true });
-    this.emailListSubject.next(updatedEmails);
+    this.updateCachedIds(this.readEmailsKey, emailId, true);
+    this.updateEmailState(emailId, { isRead: true });
     this.applyFilter(this.currentFilter);
-
-    console.log("read updatedList: ", updatedEmails);
+    // console.log("read updatedList: ", updatedEmails);
 
   }
-
-  private updateEmailState(emailId: string, changes: Partial<any>): any[] {
-    return this.emailListSubject.getValue().map(email => 
+  
+  private updateEmailState(emailId: string, changes: Partial<Email>): void {
+    const updatedEmails = this.emailListSubject.getValue().map((email) =>
       email.id === emailId ? { ...email, ...changes } : email
     );
+    this.emailListSubject.next(updatedEmails);
+  }
+
+  private getCachedIds(key: string): string[] {
+    const cached = localStorage.getItem(key);
+    return cached ? JSON.parse(cached) : [];
+  }
+
+  private updateCachedIds(key: string, emailId: string, add: boolean): void {
+    let ids = this.getCachedIds(key);
+    if (add) {
+      if (!ids.includes(emailId)) ids.push(emailId);
+    } else {
+      ids = ids.filter((id) => id !== emailId);
+    }
+    localStorage.setItem(key, JSON.stringify(ids));
+  }
+
+  private loadCachedStates(): void {
+    // TODO: initialize BehaviorSubject with cached states
+    const emails = this.emailListSubject.getValue();
+    const favoriteIds = this.getCachedIds(this.favoriteEmailsKey);
+    const readIds = this.getCachedIds(this.readEmailsKey);
+
+    if (emails.length > 0) {
+      const updatedEmails = emails.map((email) => ({
+        ...email,
+        isFavorite: favoriteIds.includes(email.id),
+        isRead: readIds.includes(email.id),
+      }));
+      this.emailListSubject.next(updatedEmails);
+    }
   }
 
   private filterEmails(emails: any[], filter: string): any[] {
