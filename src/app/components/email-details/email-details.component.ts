@@ -46,7 +46,7 @@ export class EmailDetailsComponent {
   loadEmailDetail(id: string) {
     this.isLoading = true;
     this.emailService
-      .getEmailDeatils(id)
+      .getEmailDetails(id)
       .pipe(
         finalize(() => (this.isLoading = false)),
         catchError((error) => {
