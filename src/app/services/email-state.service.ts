@@ -133,4 +133,9 @@ export class EmailStateService {
   getEmailById(id: string): Email {
     return this.emailListSubject.getValue().find(email => email.id === id)!;  // TODO: fix Non-null assertion
   }
+
+  clearCache() {
+    localStorage.removeItem(this.favoriteEmailsKey);
+    localStorage.removeItem(this.readEmailsKey);
+  }
 }
