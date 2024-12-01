@@ -3,8 +3,15 @@
   <ngx-skeleton-loader count="5" appearance="line" animation="progress-dark"></ngx-skeleton-loader>
   <ngx-skeleton-loader count="5" appearance="circle" animation="progress-dark"></ngx-skeleton-loader>
 </div>
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
-<div *ngIf="!isLoading && emailDetails">
+<div *ngIf="errorMessage">
+  <!-- TODO: reuse -->
+  <mat-card class="empty-state">
+    <mat-card-content>
+      {{ errorMessage }}
+    </mat-card-content>
+  </mat-card>
+</div>
+<div *ngIf="!isLoading && !errorMessage && emailDetails">
   <div class="email-list">
     <mat-card class="email-card">
       <mat-card-header>

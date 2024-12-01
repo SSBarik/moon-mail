@@ -10,5 +10,10 @@
 </div>
 
 <ng-template #noEmails>
-  <p>No emails available.</p>
+  <!-- TODO: reuse -->
+  <mat-card class="empty-state">
+    <mat-card-content>
+      No emails available.
+    </mat-card-content>
+  </mat-card>
 </ng-template>

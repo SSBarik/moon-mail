@@ -30,6 +30,9 @@ export class EmailDetailsComponent {
   ) {}
   
   ngOnInit() {
+
+    this.emailDetails = null;
+
     this.activatedRoute.paramMap.subscribe(params => {
       const emailId: string | null = params.get('id');
       console.log("from route id: ", emailId);
@@ -51,6 +54,8 @@ export class EmailDetailsComponent {
   }
 
   loadEmailDetail(id: string) {
+    this.errorMessage = '';
+
     this.isLoading = true;
     this.emailService
       .getEmailDetails(id)
@@ -62,9 +67,13 @@ export class EmailDetailsComponent {
         })
       )
       .subscribe((response) => {
-        this.emailDetails = response;
-        this.setIsFavorite(this.emailDetails.id);
-        this.emailStateService.markReadById(id);
+        if(response.body) {
+          this.emailDetails = response;
+          this.setIsFavorite(this.emailDetails.id);
+          this.emailStateService.markReadById(id);
+        } else {
+          this.errorMessage = 'The requested email was not found!';
+        }
       });
   }
 

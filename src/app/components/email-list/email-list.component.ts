@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { EmailStateService } from '../../services/email-state.service';
 import { EmailCardComponent } from "../email-card/email-card.component";
 import { Observable } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-email-list',
   standalone: true,
-  imports: [CommonModule, EmailCardComponent],
+  imports: [CommonModule, EmailCardComponent, MatCardModule],
   templateUrl: './email-list.component.html',
   styleUrl: './email-list.component.scss'
 })

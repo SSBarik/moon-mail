@@ -60,3 +60,14 @@ mat-card-content {
   min-width: 0;
   height: auto;
 }
+
+.empty-state {
+  text-align: center;
+  background-color: transparent;
+  padding: 20px;
+}
+
+.empty-state mat-card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
