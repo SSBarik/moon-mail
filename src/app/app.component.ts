@@ -20,6 +20,5 @@ export class AppComponent {
   clearCache() {
     this.emailService.clearCache();
     this.emailStateService.clearCache();
-    console.log("Cache Cleared!");
   }
 }

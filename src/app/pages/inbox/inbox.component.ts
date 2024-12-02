@@ -62,12 +62,10 @@ export class InboxComponent {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe when the component is destroyed to avoid memory leaks
     this.tileSubscription.unsubscribe();
   }
 
   fetchEmails(): void {
-    console.log("fetching email list...")
     this.isLoading = true;
   
     this.emailService.getEmailList()

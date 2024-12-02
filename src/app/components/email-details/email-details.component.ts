@@ -37,8 +37,7 @@ export class EmailDetailsComponent {
 
     this.activatedRoute.paramMap.subscribe(params => {
       this.emailId = params.get('id') ?? '';
-      console.log("from route id: ", this.emailId);
-
+     
       if (this.emailId) {
         if (this.previousEmailId && this.previousEmailId !== this.emailId) {
           this.emailStateService.markReadById(this.previousEmailId);
@@ -56,7 +55,7 @@ export class EmailDetailsComponent {
         this.emailStateService.updateMasterTileCols(4);
         this.emailStateService.updateSlaveTileCols(8);
       } else {
-        console.log('Email ID is null');
+        // TODO: alert
       }
     });
   }
@@ -103,14 +102,11 @@ export class EmailDetailsComponent {
   }
 
   markFavorite(id: string): void {
-    console.log("mark: ", id);
     this.emailStateService.markFavoriteById(id);
     this.isFavorite = true;
   }
 
   unmarkFavorite(id: string): void {
-    console.log("unmark: ", id);
-
     this.emailStateService.unmarkFavoriteById(id);
     this.isFavorite = false;
   }

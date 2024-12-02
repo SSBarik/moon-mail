@@ -53,7 +53,6 @@ export class EmailListComponent {
   }
 
   handleEmailClick(id: string) {
-    console.log("email id: ", id);
     this.emailStateService.setSelectedEmailId(id);
 
     // TODO: improve perf
