@@ -8,7 +8,7 @@ import { Email } from '../models/email.model';
 export class EmailStateService {
   private emailListSubject = new BehaviorSubject<Email[]>([]);
   private filteredEmailListSubject = new BehaviorSubject<Email[]>([]);
-  private currentFilter = '';
+  currentFilter = '';
   private favoriteEmailsKey = 'favoriteEmails';
   private readEmailsKey = 'readEmails';
   private selectedEmailIdSubject = new BehaviorSubject<string>('');

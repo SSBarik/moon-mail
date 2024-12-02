@@ -22,6 +22,8 @@ export class EmailDetailsComponent {
   errorMessage: string = '';
   isFavorite: boolean = false;
   email: Email | null = null;
+  emailId: string = '';
+  previousEmailId: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,15 +36,21 @@ export class EmailDetailsComponent {
     this.emailDetails = null;
 
     this.activatedRoute.paramMap.subscribe(params => {
-      const emailId: string | null = params.get('id');
-      console.log("from route id: ", emailId);
+      this.emailId = params.get('id') ?? '';
+      console.log("from route id: ", this.emailId);
 
-      if (emailId) {
-        this.loadEmailDetail(emailId);
-    
+      if (this.emailId) {
+        if (this.previousEmailId && this.previousEmailId !== this.emailId) {
+          this.emailStateService.markReadById(this.previousEmailId);
+        }
+        
+        this.loadEmailDetail(this.emailId);
+
+        this.previousEmailId = this.emailId;
+
         this.emailStateService.emailList$.subscribe(emails => {
-          this.emailStateService.setSelectedEmailId(emailId);
-          this.email = this.emailStateService.getEmailById(emailId);
+          this.emailStateService.setSelectedEmailId(this.emailId);
+          this.email = this.emailStateService.getEmailById(this.emailId);
         });
 
         this.emailStateService.updateMasterTileCols(4);
@@ -75,7 +83,10 @@ export class EmailDetailsComponent {
         if(response.body) {
           this.emailDetails = response;
           this.setIsFavorite(this.emailDetails.id);
-          this.emailStateService.markReadById(id);
+         
+          if (this.emailStateService.currentFilter !== 'unread') {
+            this.emailStateService.markReadById(id);
+          }
         } else {
           this.errorMessage = 'The requested email was not found!';
         }

@@ -60,7 +60,9 @@ export class EmailListComponent {
     this.emailStateService.updateMasterTileCols(4);
     this.emailStateService.updateSlaveTileCols(8);
   
-    this.emailStateService.markReadById(id);
+    if (this.emailStateService.currentFilter !== 'unread') {
+      this.emailStateService.markReadById(id);
+    }
     this.router.navigate([`/inbox/id/${id}`]);
   }
 }
