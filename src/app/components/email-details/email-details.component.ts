@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { catchError, EMPTY, finalize } from 'rxjs';
@@ -31,11 +31,14 @@ export class EmailDetailsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private emailService: EmailService,
-    private emailStateService: EmailStateService
+    private emailStateService: EmailStateService,
+    private cdr: ChangeDetectorRef
   ) {}
   
   ngOnInit() {
-
+    this.emailStateService.updateMasterTileCols(4);
+    this.emailStateService.updateSlaveTileCols(8);
+    
     this.emailDetails = null;
 
     this.activatedRoute.paramMap.subscribe(params => {
@@ -49,14 +52,11 @@ export class EmailDetailsComponent {
         this.loadEmailDetail(this.emailId);
 
         this.previousEmailId = this.emailId;
-
+        this.emailStateService.setSelectedEmailId(this.emailId);
+          
         this.emailStateService.emailList$.subscribe(emails => {
-          this.emailStateService.setSelectedEmailId(this.emailId);
           this.email = this.emailStateService.getEmailById(this.emailId);
         });
-
-        this.emailStateService.updateMasterTileCols(4);
-        this.emailStateService.updateSlaveTileCols(8);
       } else {
         // TODO: alert
       }
@@ -66,6 +66,7 @@ export class EmailDetailsComponent {
   ngOnDestroy() {
     this.emailStateService.updateMasterTileCols(12);
     this.emailStateService.updateSlaveTileCols(0);
+    this.emailStateService.setSelectedEmailId('');
   }
 
   loadEmailDetail(id: string) {

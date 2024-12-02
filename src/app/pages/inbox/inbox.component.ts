@@ -45,12 +45,14 @@ export class InboxComponent {
     this.tileSubscription.add(
       this.emailStateService.masterTile$.subscribe(tile => {
         this.masterTile = tile;
+        this.cdr.detectChanges();
       })
     );
 
     this.tileSubscription.add(
       this.emailStateService.slaveTile$.subscribe(tile => {
         this.slaveTile = tile;
+        this.cdr.detectChanges();
       })
     );
 
@@ -64,7 +66,7 @@ export class InboxComponent {
   ngAfterViewInit(): void {
     this.cdr.detectChanges();
   }
-
+  
   ngOnDestroy(): void {
     this.tileSubscription.unsubscribe();
   }

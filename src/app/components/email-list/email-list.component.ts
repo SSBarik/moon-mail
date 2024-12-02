@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -21,19 +21,25 @@ import { EmailCardComponent } from "../email-card/email-card.component";
 export class EmailListComponent {
   emails: Email[] = [];
   paginatedEmails: Email[] = [];
-  selectedEmailId$: Observable<string | null>;
+  selectedEmailId$: Observable<string>;
   pageSize = 10;
   currentPage = 0;
 
   constructor(
     private router: Router,
     private emailStateService: EmailStateService,
+    private cdr: ChangeDetectorRef
   ) {
     this.selectedEmailId$ = this.emailStateService.selectedEmailId$;
   }
 
   ngOnInit(): void {
     this.loadEmails();
+
+    this.selectedEmailId$.subscribe((id) => {
+      this.cdr.detectChanges();
+      this.updatePaginatedEmails();
+    });
   }
 
   loadEmails(): void {
