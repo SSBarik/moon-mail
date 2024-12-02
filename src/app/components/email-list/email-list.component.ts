@@ -19,7 +19,7 @@ export class EmailListComponent {
   emails: Email[] = [];
   paginatedEmails: Email[] = [];
   selectedEmailId$: Observable<string | null>;
-  pageSize = 5;
+  pageSize = 10;
   currentPage = 0;
 
   constructor(

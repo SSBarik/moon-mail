@@ -11,7 +11,7 @@ export class EmailStateService {
   private currentFilter = '';
   private favoriteEmailsKey = 'favoriteEmails';
   private readEmailsKey = 'readEmails';
-  private selectedEmailIdSubject = new BehaviorSubject<string | null>(null);
+  private selectedEmailIdSubject = new BehaviorSubject<string>('');
   private masterTileSubject = new BehaviorSubject<any>({
     text: 'Master',
     cols: 12,
@@ -46,11 +46,11 @@ export class EmailStateService {
     this.slaveTileSubject.next(updatedTile);
   }
 
-  get selectedEmailId(): string | null {
+  get selectedEmailId(): string {
     return this.selectedEmailIdSubject.getValue();
   }
 
-  setSelectedEmailId(id: string | null): void {
+  setSelectedEmailId(id: string): void {
     this.selectedEmailIdSubject.next(id);
   }
 
@@ -74,6 +74,40 @@ export class EmailStateService {
     const emails = this.emailListSubject.getValue();
     const filtered = this.filterEmails(emails, filter);
     this.filteredEmailListSubject.next(filtered);
+
+    // Check if the selected email ID exists in the filtered list
+    if (this.selectedEmailId && !filtered.some(email => email.id === this.selectedEmailId)) {
+      // Reset the selected email ID if it's not in the filtered list
+      this.setSelectedEmailId('');
+
+      // You can also reset the layout here if needed
+      this.resetLayout();
+    }
+  }
+
+  // applyFilter(filter: string): void {
+  //   this.currentFilter = filter;
+  //   const emails = this.emailListSubject.getValue();
+  //   const filtered = this.filterEmails(emails, filter);
+  
+  //   // Check if the current selected email is in the filtered list
+  //   const selectedEmailId = this.selectedEmailIdSubject.getValue();
+  //   const isCurrentEmailVisible = filtered.some(email => email.id === selectedEmailId);
+  
+  //   if (!isCurrentEmailVisible) {
+  //     // If the current email is not in the filtered list, reset layout
+  //     this.updateMasterTileCols(12);
+  //     this.updateSlaveTileCols(0);
+  //     this.setSelectedEmailId(''); // Clear the selected email
+  //   }
+  
+  //   this.filteredEmailListSubject.next(filtered); // Update filtered list
+  // }
+  
+
+  resetLayout() {
+    this.updateMasterTileCols(12);
+    this.updateSlaveTileCols(0);
   }
 
   markFavoriteById(emailId: string): void {
