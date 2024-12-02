@@ -31,6 +31,7 @@
 
 mat-card {
   box-shadow: none !important;
+  color: #636363 !important;
 }
 
 mat-card-title {
@@ -39,10 +40,13 @@ mat-card-title {
 
 mat-card-subtitle {
   margin-top: 10px;
+  color: #636363 !important;
 }
 
 mat-card-content {
   margin-left: 54px;
+  // margin-top: -16px;
+  // margin-bottom: -6px;
 }
 
 mat-card-actions {
@@ -69,6 +73,6 @@ mat-card-content p {
   overflow: hidden;             
   text-overflow: ellipsis;       
   display: block;               
-  width: 90%;                  
-}
+  width: 90%;      
+ }
 

@@ -6,9 +6,9 @@
     <mat-card-header>
       <div mat-card-avatar class="email-avatar">{{ getInitial(email.from.name) }}</div>
       <mat-card-title>
-        From: {{ email.from.name }} &lt;{{ email.from.email }}&gt;
+        From: <b>{{ email.from.name }} &lt;{{ email.from.email }}&gt;</b>
       </mat-card-title>
-      <mat-card-subtitle>Subject: {{ email.subject }}</mat-card-subtitle>
+      <mat-card-subtitle>Subject: <b>{{ email.subject }}</b></mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
