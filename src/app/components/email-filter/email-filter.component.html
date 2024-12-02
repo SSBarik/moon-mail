@@ -3,8 +3,6 @@
   <mat-chip-listbox
     [(ngModel)]="currentFilter"
     (ngModelChange)="applyFilter($event)"
-    disableRipple
-    disableOptionCentering
     hideSingleSelectionIndicator>
     <mat-chip-option
       *ngFor="let filter of filters"

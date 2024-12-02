@@ -1,12 +1,18 @@
 <div *ngIf="emails && emails.length; else noEmails">
   <ul>
-    <li *ngFor="let email of emails" (click)="handleEmailClick(email.id)">
+    <li *ngFor="let email of paginatedEmails" (click)="handleEmailClick(email.id)">
       <app-email-card 
         [email]="email"
         [isActive]="(selectedEmailId$ | async) === email.id">
       </app-email-card>
     </li> 
   </ul>
+
+  <mat-paginator
+    [length]="emails.length"
+    [pageSize]="10"
+    (page)="onPageChange($event)">
+  </mat-paginator>
 </div>
 
 <ng-template #noEmails>
