@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { EmailBody, EmailListResponse } from '../models/email.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,6 +11,15 @@ export class EmailService {
   private cacheKeyPrefix = 'emailDetails_';
 
   constructor(private http: HttpClient) {}
+  
+  private getCachedEmail(id: string): EmailBody | null {
+    const data = localStorage.getItem(this.cacheKeyPrefix + id);
+    return data ? JSON.parse(data) : null;
+  }
+
+  private cacheEmail(id: string, data: EmailBody): void {
+    localStorage.setItem(this.cacheKeyPrefix + id, JSON.stringify(data));
+  }
 
   getEmailList(): Observable<EmailListResponse> {
     return this.http.get<EmailListResponse>(this.apiUrl);
@@ -30,15 +39,6 @@ export class EmailService {
         throw error;
       })
     );
-  }
-
-  private getCachedEmail(id: string): EmailBody | null {
-    const data = localStorage.getItem(this.cacheKeyPrefix + id);
-    return data ? JSON.parse(data) : null;
-  }
-
-  private cacheEmail(id: string, data: EmailBody): void {
-    localStorage.setItem(this.cacheKeyPrefix + id, JSON.stringify(data));
   }
 
   // TODO: reuse

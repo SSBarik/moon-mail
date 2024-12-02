@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { EmailStateService } from '../../services/email-state.service';
 import { CommonModule } from '@angular/common';
-import { FilterType } from '../../enums/common';
-import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
+
+import { MatChipsModule } from '@angular/material/chips';
+
+import { EmailStateService } from '../../services/email-state.service';
+import { FilterType } from '../../enums/common';
 
 @Component({
   selector: 'app-email-filter',
@@ -13,10 +15,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './email-filter.component.scss'
 })
 export class EmailFilterComponent {
-  // currentFilter: 'all' | 'read' | 'unread' | 'favorite' = 'all'; // TODO: refactor
-  currentFilter: FilterType = FilterType.All;
+  currentFilter: FilterType = FilterType.All; // TODO: refactor
   
-  // Define filter options
   filters = [
     { label: 'All', value: FilterType.All },
     { label: 'Unread', value: FilterType.Unread },

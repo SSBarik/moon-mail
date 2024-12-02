@@ -1,16 +1,20 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { EmailListComponent } from "../../components/email-list/email-list.component";
-import { Email, EmailListResponse } from '../../models/email.model';
-import { EmailService } from '../../services/email.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { catchError, finalize, of, Subscription } from 'rxjs';
-import { EmailStateService } from '../../services/email-state.service';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
+import { EmailStateService } from '../../services/email-state.service';
+import { EmailService } from '../../services/email.service';
+import { Email, EmailListResponse } from '../../models/email.model';
+
+import { EmailListComponent } from "../../components/email-list/email-list.component";
 import { EmailCardComponent } from '../../components/email-card/email-card.component';
 import { EmailFilterComponent } from '../../components/email-filter/email-filter.component';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 
 @Component({
   selector: 'app-inbox',

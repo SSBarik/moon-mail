@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EmailService } from '../../services/email.service';
-import { Email, EmailBody } from '../../models/email.model';
-import { catchError, EMPTY, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { catchError, EMPTY, finalize } from 'rxjs';
+
 import { MatButtonModule } from '@angular/material/button';
-import { EmailStateService } from '../../services/email-state.service';
 import { MatCardModule } from '@angular/material/card';
+
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
+import { EmailService } from '../../services/email.service';
+import { EmailStateService } from '../../services/email-state.service';
+import { Email, EmailBody } from '../../models/email.model';
 
 @Component({
   selector: 'app-email-details',

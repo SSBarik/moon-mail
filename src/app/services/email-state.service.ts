@@ -8,7 +8,6 @@ import { Email } from '../models/email.model';
 export class EmailStateService {
   private emailListSubject = new BehaviorSubject<Email[]>([]);
   private filteredEmailListSubject = new BehaviorSubject<Email[]>([]);
-  currentFilter = '';
   private favoriteEmailsKey = 'favoriteEmails';
   private readEmailsKey = 'readEmails';
   private selectedEmailIdSubject = new BehaviorSubject<string>('');
@@ -31,9 +30,61 @@ export class EmailStateService {
   filteredEmailList$ = this.filteredEmailListSubject.asObservable();
   masterTile$ = this.masterTileSubject.asObservable();
   slaveTile$ = this.slaveTileSubject.asObservable();
+  currentFilter = '';
   
   constructor() {
     this.loadCachedStates();
+  }
+
+  private updateEmailState(emailId: string, changes: Partial<Email>): void {
+    const updatedEmails = this.emailListSubject.getValue().map((email) =>
+      email.id === emailId ? { ...email, ...changes } : email
+    );
+    this.emailListSubject.next(updatedEmails);
+  }
+
+  private getCachedIds(key: string): string[] {
+    const cached = localStorage.getItem(key);
+    return cached ? JSON.parse(cached) : [];
+  }
+
+  private updateCachedIds(key: string, emailId: string, add: boolean): void {
+    let ids = this.getCachedIds(key);
+    if (add) {
+      if (!ids.includes(emailId)) ids.push(emailId);
+    } else {
+      ids = ids.filter((id) => id !== emailId);
+    }
+    localStorage.setItem(key, JSON.stringify(ids));
+  }
+
+  private loadCachedStates(): void {
+    // TODO: initialize BehaviorSubject with cached states
+    const emails = this.emailListSubject.getValue();
+    const favoriteIds = this.getCachedIds(this.favoriteEmailsKey);
+    const readIds = this.getCachedIds(this.readEmailsKey);
+
+    if (emails.length > 0) {
+      const updatedEmails = emails.map((email) => ({
+        ...email,
+        isFavorite: favoriteIds.includes(email.id),
+        isRead: readIds.includes(email.id),
+      }));
+      this.emailListSubject.next(updatedEmails);
+    }
+  }
+
+  private filterEmails(emails: any[], filter: string): any[] {
+    switch (filter) {
+      case 'read':
+        return emails.filter(email => email.isRead);
+      case 'unread':
+        return emails.filter(email => !email.isRead);
+      case 'favorite':
+        return emails.filter(email => email.isFavorite);
+      default:
+        return emails;
+    }
   }
 
   updateMasterTileCols(cols: number): void {
@@ -101,57 +152,6 @@ export class EmailStateService {
     this.updateCachedIds(this.readEmailsKey, emailId, true);
     this.updateEmailState(emailId, { isRead: true });
     this.applyFilter(this.currentFilter);
-  }
-  
-  private updateEmailState(emailId: string, changes: Partial<Email>): void {
-    const updatedEmails = this.emailListSubject.getValue().map((email) =>
-      email.id === emailId ? { ...email, ...changes } : email
-    );
-    this.emailListSubject.next(updatedEmails);
-  }
-
-  private getCachedIds(key: string): string[] {
-    const cached = localStorage.getItem(key);
-    return cached ? JSON.parse(cached) : [];
-  }
-
-  private updateCachedIds(key: string, emailId: string, add: boolean): void {
-    let ids = this.getCachedIds(key);
-    if (add) {
-      if (!ids.includes(emailId)) ids.push(emailId);
-    } else {
-      ids = ids.filter((id) => id !== emailId);
-    }
-    localStorage.setItem(key, JSON.stringify(ids));
-  }
-
-  private loadCachedStates(): void {
-    // TODO: initialize BehaviorSubject with cached states
-    const emails = this.emailListSubject.getValue();
-    const favoriteIds = this.getCachedIds(this.favoriteEmailsKey);
-    const readIds = this.getCachedIds(this.readEmailsKey);
-
-    if (emails.length > 0) {
-      const updatedEmails = emails.map((email) => ({
-        ...email,
-        isFavorite: favoriteIds.includes(email.id),
-        isRead: readIds.includes(email.id),
-      }));
-      this.emailListSubject.next(updatedEmails);
-    }
-  }
-
-  private filterEmails(emails: any[], filter: string): any[] {
-    switch (filter) {
-      case 'read':
-        return emails.filter(email => email.isRead);
-      case 'unread':
-        return emails.filter(email => !email.isRead);
-      case 'favorite':
-        return emails.filter(email => email.isFavorite);
-      default:
-        return emails;
-    }
   }
 
   getEmailList(): Observable<Email[]> {

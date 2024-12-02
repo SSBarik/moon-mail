@@ -1,12 +1,15 @@
-import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
-import { Email, EmailListResponse } from '../../models/email.model';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { EmailStateService } from '../../services/email-state.service';
-import { EmailCardComponent } from "../email-card/email-card.component";
 import { Observable } from 'rxjs';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
+import { EmailStateService } from '../../services/email-state.service';
+import { Email } from '../../models/email.model';
+
+import { EmailCardComponent } from "../email-card/email-card.component";
 
 @Component({
   selector: 'app-email-list',
