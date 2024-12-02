@@ -1,10 +1,10 @@
-<section *ngIf="isLoading" aria-busy="true" aria-live="polite">
+<section *ngIf="isLoading" aria-busy="true" aria-live="polite" aria-label="Loading emails">
   <!-- TODO: reuse -->
   <ngx-skeleton-loader count="1" appearance="circle" animation="progress-dark"></ngx-skeleton-loader>
   <ngx-skeleton-loader count="15" appearance="line" animation="progress-dark"></ngx-skeleton-loader>
 </section>
 
-<section *ngIf="errorMessage" aria-live="assertive">
+<section *ngIf="errorMessage" aria-live="assertive" role="alert" aria-label="Error message">
   <!-- TODO: reuse -->
   <mat-card class="empty-state">
     <mat-card-content>
@@ -16,24 +16,38 @@
 <section *ngIf="!isLoading && !errorMessage && emailDetails" class="email-details-container" aria-labelledby="email-details">
     <mat-card class="email-detail-card">
       <mat-card-header>
-        <div mat-card-avatar class="email-avatar">{{ getInitial(this.email?.from?.name ?? '') }}</div> 
-        <mat-card-title>
+        <div mat-card-avatar class="email-avatar" aria-label="Sender's initials icon">
+          {{ getInitial(this.email?.from?.name ?? '') }}
+        </div> 
+        <mat-card-title aria-label="Email subject">
           {{ this.email?.subject }}
         </mat-card-title>
         <mat-card-subtitle>
-          <span class="email-date">  {{ this.email?.date | date: 'dd/MM/yyyy hh:mma' | lowercase }} </span>
+          <span class="email-date" aria-label="Email date and time">  {{ this.email?.date | date: 'dd/MM/yyyy hh:mma' | lowercase }} </span>
         </mat-card-subtitle>
       </mat-card-header>
   
       <mat-card-content>
-        <div [innerHTML]="emailDetails.body"></div>
+        <div [innerHTML]="emailDetails.body" aria-label="Email body"></div>
       </mat-card-content>
   
       <mat-card-actions>
-        <button *ngIf="isFavorite" class="mark-btn" mat-stroked-button color="primary" (click)="unmarkFavorite(emailDetails.id)">
+        <button 
+          *ngIf="isFavorite" 
+          class="mark-btn" 
+          mat-stroked-button 
+          color="primary" 
+          (click)="unmarkFavorite(emailDetails.id)"
+          aria-label="Unmark as favorite">
           Unmark favourite
         </button>
-        <button *ngIf="!isFavorite" class="mark-btn" mat-flat-button color="accent" (click)="markFavorite(emailDetails.id)">
+        <button 
+          *ngIf="!isFavorite" 
+          class="mark-btn" 
+          mat-flat-button 
+          color="accent" 
+          (click)="markFavorite(emailDetails.id)"
+          aria-label="Mark as favorite">
           Mark as favourite
         </button>
       </mat-card-actions>

@@ -8,8 +8,8 @@
     [colspan]="masterTile.cols" 
     [rowspan]="masterTile.rows" 
     [style.background]="masterTile.color">
-    <article class="master-content">
-      <div *ngIf="isLoading">
+    <section class="tile-container">
+      <div *ngIf="isLoading" aria-busy="true">
         <!-- TODO: reuse -->
         <ng-container *ngFor="let _ of [].constructor(5); let i = index">
           <ngx-skeleton-loader count="1" appearance="circle" animation="progress-dark"></ngx-skeleton-loader>
@@ -27,7 +27,7 @@
       <div *ngIf="!isLoading" class="email-list-container">
         <app-email-list></app-email-list>
       </div>
-    </article>
+    </section>
   </mat-grid-tile>
 
   <mat-grid-tile 
@@ -36,9 +36,9 @@
     [rowspan]="slaveTile.rows" 
     [style.background]="slaveTile.color">
     <!-- TODO: style fix -->
-    <div class="master-content">
+    <section class="tile-container">
        <router-outlet></router-outlet>
-    </div>
+    </section>
   </mat-grid-tile>
 </mat-grid-list>
 

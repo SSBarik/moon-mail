@@ -1,8 +1,9 @@
-<section class="filter-buttons">
+<section class="filter-buttons" aria-labelledby="email-filters">
   <span class="filter-label">Filters:</span>
   <mat-chip-listbox
     [(ngModel)]="currentFilter"
     (ngModelChange)="applyFilter($event)"
+    aria-label="Filter emails"
     hideSingleSelectionIndicator>
     <mat-chip-option
       *ngFor="let filter of filters"
