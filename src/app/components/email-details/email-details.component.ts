@@ -91,9 +91,17 @@ export class EmailDetailsComponent {
     return email ? email.isFavorite?? false : false;
   }
 
-  toggleFavourite(id: string): void {
-    this.isFavorite ? this.emailStateService.unmarkFavoriteById(id) : this.emailStateService.markFavoriteById(id);
-    this.isFavorite = !this.isFavorite;
+  markFavorite(id: string): void {
+    console.log("mark: ", id);
+    this.emailStateService.markFavoriteById(id);
+    this.isFavorite = true;
+  }
+
+  unmarkFavorite(id: string): void {
+    console.log("unmark: ", id);
+
+    this.emailStateService.unmarkFavoriteById(id);
+    this.isFavorite = false;
   }
 
   getInitial(name: string): string {

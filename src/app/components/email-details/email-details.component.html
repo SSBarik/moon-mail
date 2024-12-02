@@ -30,10 +30,14 @@
       </mat-card-content>
   
       <mat-card-actions>
-        <button class="mark-read-btn" mat-flat-button color="accent" (click)="toggleFavourite(emailDetails.id)">
-          {{ this.isFavorite ? 'Unmark favourite' : 'Mark as favourite' }}
+        <button *ngIf="isFavorite" class="mark-btn" mat-stroked-button color="primary" (click)="unmarkFavorite(emailDetails.id)">
+          Unmark favourite
+        </button>
+        <button *ngIf="!isFavorite" class="mark-btn" mat-flat-button color="accent" (click)="markFavorite(emailDetails.id)">
+          Mark as favourite
         </button>
       </mat-card-actions>
+      
     </mat-card>
   </div>
   
