@@ -1,4 +1,4 @@
-<div *ngIf="emails && emails.length; else noEmails">
+<section *ngIf="emails && emails.length; else noEmails">
   <ul>
     <li *ngFor="let email of paginatedEmails" (click)="handleEmailClick(email.id)">
       <app-email-card 
@@ -13,7 +13,7 @@
     [pageSize]="10"
     (page)="onPageChange($event)">
   </mat-paginator>
-</div>
+</section>
 
 <ng-template #noEmails>
   <!-- TODO: reuse -->

@@ -1,21 +1,21 @@
-<div *ngIf="isLoading">
+<section *ngIf="isLoading" aria-busy="true" aria-live="polite">
   <!-- TODO: reuse -->
   <ngx-skeleton-loader count="1" appearance="circle" animation="progress-dark"></ngx-skeleton-loader>
   <ngx-skeleton-loader count="15" appearance="line" animation="progress-dark"></ngx-skeleton-loader>
-</div>
-<div *ngIf="errorMessage">
+</section>
+
+<section *ngIf="errorMessage" aria-live="assertive">
   <!-- TODO: reuse -->
   <mat-card class="empty-state">
     <mat-card-content>
       {{ errorMessage }}
     </mat-card-content>
   </mat-card>
-</div>
-<div *ngIf="!isLoading && !errorMessage && emailDetails">
-  <div class="email-list">
-    <mat-card class="email-card">
+</section>
+
+<section *ngIf="!isLoading && !errorMessage && emailDetails" class="email-details-container" aria-labelledby="email-details">
+    <mat-card class="email-detail-card">
       <mat-card-header>
-        <!-- TODO: Fix -->
         <div mat-card-avatar class="email-avatar">{{ getInitial(this.email?.from?.name ?? '') }}</div> 
         <mat-card-title>
           {{ this.email?.subject }}
@@ -37,10 +37,5 @@
           Mark as favourite
         </button>
       </mat-card-actions>
-      
     </mat-card>
-  </div>
-  
-  <!-- <h3>{{ emailDetails.id }}</h3> -->
-  
-</div>
+</section>

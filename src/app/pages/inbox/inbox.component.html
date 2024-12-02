@@ -1,15 +1,14 @@
-<div class="email-filter">
+<section role="filter" class="email-filter">
      <app-email-filter></app-email-filter>
-</div>
+</section>
 
 <mat-grid-list cols="12" rowHeight="40vh">
-  <!-- Master Tile -->
   <mat-grid-tile 
     *ngIf="masterTile" 
     [colspan]="masterTile.cols" 
     [rowspan]="masterTile.rows" 
     [style.background]="masterTile.color">
-    <div class="master-content">
+    <article class="master-content">
       <div *ngIf="isLoading">
         <!-- TODO: reuse -->
         <ng-container *ngFor="let _ of [].constructor(5); let i = index">
@@ -19,7 +18,7 @@
       </div>
 
       <!-- TODO: Alerts -->
-      <div *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div *ngIf="errorMessage" role="alert" class="error-message">{{ errorMessage }}</div>
   
       <div *ngIf="!isLoading && emailList.length === 0">
         No emails available.
@@ -28,10 +27,9 @@
       <div *ngIf="!isLoading" class="email-list-container">
         <app-email-list></app-email-list>
       </div>
-    </div>
+    </article>
   </mat-grid-tile>
 
-  <!-- Slave Tile -->
   <mat-grid-tile 
     *ngIf="slaveTile" 
     [colspan]="slaveTile.cols" 
