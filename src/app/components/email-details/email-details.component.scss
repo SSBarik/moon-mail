@@ -32,8 +32,13 @@ mat-card {
   box-shadow: none !important;
 }
 
+mat-card-title {
+  font-size: xx-large;
+}
+
 mat-card-subtitle {
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 mat-card-content {
@@ -47,11 +52,11 @@ mat-card-content {
 
 .mark-btn {
   position: absolute;
-  top: 15px; 
+  top: 22px; 
   right: 54px; 
   z-index: 10; 
   border-radius: 50px;
-  font-size: 10px; 
+  font-size: 12px; 
   padding: 8px 12px; 
   min-width: 0;
   height: auto;

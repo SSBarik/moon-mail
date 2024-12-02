@@ -19,9 +19,9 @@ export class EmailFilterComponent {
   // Define filter options
   filters = [
     { label: 'All', value: FilterType.All },
-    { label: 'Read', value: FilterType.Read },
     { label: 'Unread', value: FilterType.Unread },
-    { label: 'Favorite', value: FilterType.Favorite }
+    { label: 'Read', value: FilterType.Read },
+    { label: 'Favorites', value: FilterType.Favorite }
   ];
 
   constructor(private emailStateService: EmailStateService) {}
