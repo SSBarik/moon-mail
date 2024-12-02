@@ -53,6 +53,11 @@ export class EmailDetailsComponent {
     });
   }
 
+  ngOnDestroy() {
+    this.emailStateService.updateMasterTileCols(12);
+    this.emailStateService.updateSlaveTileCols(0);
+  }
+
   loadEmailDetail(id: string) {
     this.errorMessage = '';
 
